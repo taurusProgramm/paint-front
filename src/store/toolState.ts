@@ -9,7 +9,7 @@ const socket = new WebSocket('ws://192.168.0.101:5000/')
 export const useToolStore = defineStore('toolStore', {
     state: ():ITool => {
         return {
-            tool: new Tool(canvas, socket, ''),
+            tool:  Tool as any,
         }
     },
     actions: {

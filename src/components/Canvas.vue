@@ -55,8 +55,8 @@ export default defineComponent({
         }
 
         const handlerMouseUp = () => {
-            axios.post(`http://localhost:5000/image?id=${route.params.id}`, {img: canvasRef.value.toDataURL()})
-            .then(response => console.log(response.data))
+            // axios.post(`http://localhost:5000/image?id=${route.params.id}`, {img: canvasRef.value.toDataURL()})
+            // .then(response => console.log(response.data))
         }
 
         function copyUrl() {
@@ -82,21 +82,21 @@ export default defineComponent({
 
         onMounted(() => {
             canvasStore.setCanvas(canvasRef.value);
-            const socket = new WebSocket('ws://192.168.0.101:5000/')
+            const socket = new WebSocket('ws://88.201.178.202:81/')
             canvasStore.setSocket(socket)
             canvasStore.setSessionId(String(route.params.id))
             toolStore.setTool(new Brush(canvasRef.value, socket, String(route.params.id)));
 
             let ctx = canvasRef.value.getContext('2d')
-            axios.get(`http://localhost:5000/image?id=${route.params.id}`)
-            .then(response => {
-                const img = new Image()
-                img.src = response.data
-                img.onload = () => {
-                    ctx.clearRect(0, 0, canvasRef.value.width, canvasRef.value.height)
-                    ctx.drawImage(img, 0, 0, canvasRef.value.width, canvasRef.value.height)
-                }
-            })
+            // axios.get(`http://localhost:5000/image?id=${route.params.id}`)
+            // .then(response => {
+            //     const img = new Image()
+            //     img.src = response.data
+            //     img.onload = () => {
+            //         ctx.clearRect(0, 0, canvasRef.value.width, canvasRef.value.height)
+            //         ctx.drawImage(img, 0, 0, canvasRef.value.width, canvasRef.value.height)
+            //     }
+            // })
 
             socket.onopen = ()=>{
                 socket.send(JSON.stringify({
